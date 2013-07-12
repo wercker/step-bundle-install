@@ -76,7 +76,7 @@ else
         success "finished $bundle_command"
     fi
 
-    if ! type rbenv > /dev/null ; then
+    if ! type rbenv &> /dev/null ; then
         debug 'skipping rbenv rehash because rbenv is not found'
     else
         debug 'rbenv is found... will rehash'
