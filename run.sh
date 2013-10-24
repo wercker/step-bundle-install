@@ -40,6 +40,10 @@ if [ "$WERCKER_BUNDLE_INSTALL_LOCAL" = "true" ] ; then
     bundle_command="$bundle_command --local"
 fi
 
+if [ "$WERCKER_BUNDLE_INSTALL_FROZEN" = "true" ] ; then
+    bundle_command="$bundle_command --frozen"
+fi
+
 if [ ! "$PWD" = "$WERCKER_SOURCE_DIR" ] ; then
     debug "changing directory from $PWD to $WERCKER_SOURCE_DIR"
     cd $WERCKER_SOURCE_DIR
