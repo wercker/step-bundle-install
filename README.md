@@ -1,4 +1,4 @@
-# mktemp 
+# bundle-install
 
 This is an _smart_ version of the `bundle install` command that stores downloaded gems in a cache directory that is shared with future builds. This should improve the execution time of the future builds.
 
@@ -34,7 +34,7 @@ The MIT License (MIT)
 
 # Changelog
 
-## 0.9.2
+## 0.9.3
 
 - Add frozen flag
 
