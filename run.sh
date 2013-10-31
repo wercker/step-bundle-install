@@ -1,5 +1,4 @@
 #!/bin/sh
-cd $WERCKER_ROOT
 bundle_command="bundle install"
 
 if [ -z "$WERCKER_BUNDLE_INSTALL_PATH" ] ; # Check $WERCKER_BUNDLE_INSTALL exists
@@ -42,11 +41,6 @@ fi
 
 if [ "$WERCKER_BUNDLE_INSTALL_FROZEN" = "true" ] ; then
     bundle_command="$bundle_command --frozen"
-fi
-
-if [ ! "$PWD" = "$WERCKER_SOURCE_DIR" ] ; then
-    debug "changing directory from $PWD to $WERCKER_SOURCE_DIR"
-    cd $WERCKER_SOURCE_DIR
 fi
 
 # Install bundler gem if needed
