@@ -6,7 +6,7 @@ This is an _smart_ version of the `bundle install` command that stores downloade
 
 # What's new
 
-* Add --frozen flag
+- Remove unnecessary 'cd' commands
 
 # Options
 
@@ -33,6 +33,10 @@ build:
 The MIT License (MIT)
 
 # Changelog
+
+## 0.9.4
+
+- Remove unnecessary 'cd' commands
 
 ## 0.9.3
 
