@@ -12,7 +12,7 @@ then
 fi
 
 if [ -n "$WERCKER_BUNDLE_INSTALL_WITHOUT" ] ; then
-    bundle_command="$bundle_command --without \"$WERCKER_BUNDLE_INSTALL_WITHOUT\""
+    bundle_command="$bundle_command --without $WERCKER_BUNDLE_INSTALL_WITHOUT"
 fi
 
 if [ "$WERCKER_BUNDLE_INSTALL_STANDALONE" = "true" ] ; then
