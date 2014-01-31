@@ -6,7 +6,8 @@ This is an _smart_ version of the `bundle install` command that stores downloade
 
 # What's new
 
-- Remove unnecessary 'cd' commands
+- Update to bundler `1.5.2`
+- Add `jobs` parameter.
 
 # Options
 
@@ -19,7 +20,7 @@ This is an _smart_ version of the `bundle install` command that stores downloade
 * `deployment` (optional) Install using defaults tuned for deployment environments.
 * `local` (optional) Do not attempt to fetch gems remotely and use the gem cache instead.
 * `frozen` (optional) Do not allow the Gemfile.lock to be updated after this install.
-* `jobs` (optional) Install gems parallely by starting the number of workers specified.
+* `jobs` (optional) Install gems parallely by starting the number of workers specified (require at least bundler `1.5`).
 
 # Example
 
@@ -34,6 +35,11 @@ build:
 The MIT License (MIT)
 
 # Changelog
+
+## 1.0.0
+
+- Update to bundler `1.5.2`
+- Add `jobs` parameter.
 
 ## 0.9.4
 
