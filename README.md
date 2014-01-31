@@ -36,7 +36,7 @@ The MIT License (MIT)
 
 # Changelog
 
-## 1.0.0
+## 1.1.0
 
 - Update to bundler `1.5.2`
 - Add `jobs` parameter.
