@@ -43,11 +43,17 @@ if [ "$WERCKER_BUNDLE_INSTALL_FROZEN" = "true" ] ; then
     bundle_command="$bundle_command --frozen"
 fi
 
+if [ -n "$WERCKER_BUNDLE_INSTALL_JOBS" ] ; then
+    if [ "$WERCKER_BUNDLE_INSTALL_JOBS" -gt 0 ] ; then
+        bundle_command="$bundle_command --jobs=$WERCKER_BUNDLE_INSTALL_JOBS"
+    fi
+fi
+
 # Install bundler gem if needed
 if ! type bundle &> /dev/null ;
 then
      info 'bundler gem not found, starting installing it'
-     sudo gem install bundler --no-rdoc --no-ri --version '1.3'
+     sudo gem install bundler --no-rdoc --no-ri --version '>=1.5.2'
 
      if [[ $? -ne 0 ]];then
          fail 'bundler gem installation failed';
