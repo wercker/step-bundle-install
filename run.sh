@@ -49,43 +49,47 @@ if [ -n "$WERCKER_BUNDLE_INSTALL_JOBS" ] ; then
     fi
 fi
 
-# Install bundler gem if needed
-if ! type bundle &> /dev/null ;
-then
-     info 'bundler gem not found, starting installing it'
-     sudo gem install bundler --no-rdoc --no-ri --version '>=1.5.2'
+install_bundler() {
+    # Install bundler gem if needed
+    if ! type bundle &> /dev/null; then
+         info 'bundler gem not found, starting installing it';
+         sudo gem install bundler --no-rdoc --no-ri --version '>=1.5.2';
 
-     if [[ $? -ne 0 ]];then
-         fail 'bundler gem installation failed';
-     else
-         info 'finished bundler gem installation';
-     fi
-else
-    debug "type bundle: $(type bundle)"
-    debug "bundle version: $(bundle --version)"
-    info 'bundler gem is available, and will not be installed by this step'
-fi
-
-if [ ! -e "$WERCKER_SOURCE_DIR/Gemfile" ] && [ ! -e "$WERCKER_SOURCE_DIR/gemfile" ] ; then
-    warn "Skipping bundle install because Gemfile not found in $WERCKER_SOURCE_DIR"
-else
-    info 'Gemfile found. Start bundle install.'
-    debug "$bundle_command"
-    $bundle_command
-
-    if [[ $? -ne 0 ]]
-    then
-        fail 'bundle install command failed'
+         if [[ $? -ne 0 ]]; then
+             fail 'bundler gem installation failed';
+         else
+             info 'finished bundler gem installation';
+         fi
     else
-        success "finished $bundle_command"
+        info 'bundler gem is available, and will not be installed by this step';
+    fi
+
+    debug "type bundle: $(type bundle)";
+    debug "bundle version: $(bundle --version)";
+}
+
+if [ ! -e "$PWD/Gemfile" ]; then
+    info "Skipping bundle install because Gemfile not found in $PWD";
+else
+    info 'Gemfile found. Start bundle install.';
+
+    install_bundler;
+
+    debug "$bundle_command";
+    $bundle_command;
+
+    if [[ $? -ne 0 ]]; then
+        fail 'bundle install command failed';
+    else
+        success "finished $bundle_command";
     fi
 
     if ! type rbenv &> /dev/null ; then
-        debug 'skipping rbenv rehash because rbenv is not found'
+        debug 'skipping rbenv rehash because rbenv is not found';
     else
-        debug 'rbenv is found... will rehash'
-        debug 'rbenv rehash'
-        rbenv rehash
-        info 'rbenv rehash completed'
+        debug 'rbenv is found... will rehash';
+        debug 'rbenv rehash';
+        rbenv rehash;
+        info 'rbenv rehash completed';
     fi
 fi
