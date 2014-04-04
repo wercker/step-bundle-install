@@ -6,8 +6,9 @@ This is an _smart_ version of the `bundle install` command that stores downloade
 
 # What's new
 
-- Update to bundler `1.5.2`
-- Add `jobs` parameter.
+- Fix bug if cwd parameter is used
+- Only install bundler if an Gemfile is found
+- Always display bundle version information
 
 # Options
 
@@ -35,6 +36,12 @@ build:
 The MIT License (MIT)
 
 # Changelog
+
+## 1.1.1
+
+- Fix bug if cwd parameter is used
+- Only install bundler if an Gemfile is found
+- Always display bundle version information
 
 ## 1.1.0
 
