@@ -49,11 +49,15 @@ if [ -n "$WERCKER_BUNDLE_INSTALL_JOBS" ] ; then
     fi
 fi
 
+if [ -z "$WERCKER_BUNDLE_INSTALL_VERSION" ] ; then
+    export WERCKER_BUNDLE_INSTALL_VERSION=">=1.5.2"
+fi
+
 install_bundler() {
     # Install bundler gem if needed
     if ! type bundle &> /dev/null; then
          info 'bundler gem not found, starting installing it';
-         sudo gem install bundler --no-rdoc --no-ri --version '>=1.5.2';
+         sudo gem install bundler --no-rdoc --no-ri --version "$WERCKER_BUNDLE_INSTALL_VERSION";
 
          if [[ $? -ne 0 ]]; then
              fail 'bundler gem installation failed';
