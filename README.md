@@ -6,9 +6,7 @@ This is an _smart_ version of the `bundle install` command that stores downloade
 
 # What's new
 
-- Fix bug if cwd parameter is used
-- Only install bundler if an Gemfile is found
-- Always display bundle version information
+- Add `version` option
 
 # Options
 
@@ -38,6 +36,10 @@ build:
 The MIT License (MIT)
 
 # Changelog
+
+## 1.1.2
+
+- Add `version` option
 
 ## 1.1.1
 
