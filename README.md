@@ -22,6 +22,7 @@ This is an _smart_ version of the `bundle install` command that stores downloade
 * `jobs` (optional) Install gems parallely by starting the number of workers specified (require at least bundler `1.5`).
 * `version` (optional, default: `>=1.5.2`) If no bundler is found, install
 bundler with this version. Supports semver version.
+* `gemfile` (optional, default: `Gemfile`) The name of the file that bundler should use as the Gemfile.
 
 # Example
 
@@ -36,6 +37,10 @@ build:
 The MIT License (MIT)
 
 # Changelog
+
+## 1.1.3
+
+- Add `gemfile` option
 
 ## 1.1.2
 
