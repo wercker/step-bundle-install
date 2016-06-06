@@ -1,3 +1,11 @@
 name: bundle-install
-version: 1.1.3
+version: 2.0.0
 description: bundle-install step
+keywords:
+  - bundler
+  - ruby
+properties:
+  clear-path:
+    type: string
+    required: false
+    default: "true"

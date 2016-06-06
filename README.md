@@ -1,12 +1,11 @@
 # bundle-install
 
-This is an _smart_ version of the `bundle install` command that stores downloaded gems in a cache directory that is shared with future builds. This should improve the execution time of the future builds.
+This is an _smart_ version of the `bundle install` command that stores
+downloaded gems in a cache directory that is shared with future builds. This
+should improve the execution time of the future builds. If bundle install
+failed it will retry one more time, optionally clearing the gem path.
 
 [![wercker status](https://app.wercker.com/status/3e287b2291a600958d7dd47ba35d9af8/m "wercker status")](https://app.wercker.com/project/bykey/3e287b2291a600958d7dd47ba35d9af8)
-
-# What's new
-
-- Add `version` option
 
 # Options
 
@@ -23,7 +22,9 @@ This is an _smart_ version of the `bundle install` command that stores downloade
 * `version` (optional, default: `>=1.5.2`) If no bundler is found, install
 bundler with this version. Supports semver version.
 * `gemfile` (optional, default: `Gemfile`) The name of the file that bundler should use as the Gemfile.
-* `retry` (optional, defaults to 3 retries) Retry network and git requests that have failed.
+* `retry` (optional, default: `3`) Retry network and git requests that have failed.
+* `clear-path` (optional, default: `true`) Before retrying a failed bundle
+   install, clear the location that is used for the gems.
 
 # Example
 
@@ -38,6 +39,12 @@ build:
 The MIT License (MIT)
 
 # Changelog
+
+## 2.0.0
+
+- Add `retry` to the bundle command
+- Try running the bundle install command another time if it fails.
+- Clear the path by default once the bundle install command fails.
 
 ## 1.1.3
 
