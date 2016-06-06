@@ -23,6 +23,7 @@ This is an _smart_ version of the `bundle install` command that stores downloade
 * `version` (optional, default: `>=1.5.2`) If no bundler is found, install
 bundler with this version. Supports semver version.
 * `gemfile` (optional, default: `Gemfile`) The name of the file that bundler should use as the Gemfile.
+* `retry` (optional, defaults to 3 retries) Retry network and git requests that have failed.
 
 # Example
 

@@ -59,6 +59,12 @@ if [ -n "$WERCKER_BUNDLE_INSTALL_GEMFILE" ] ; then
     bundle_command="$bundle_command --gemfile $gemfile_name"
 fi
 
+if [ -z "$WERCKER_BUNDLE_INSTALL_RETRY" ] ; then
+    bundle_command="$bundle_command --retry 3"
+else
+    bundle_command="$bundle_command --retry $WERCKER_BUNDLE_INSTALL_RETRY"
+fi
+
 install_bundler() {
     # Install bundler gem if needed
     if ! type bundle &> /dev/null; then
