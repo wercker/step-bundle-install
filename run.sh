@@ -92,6 +92,8 @@ install_bundler() {
 retry() {
     info "Unable to execute bundle install";
 
+    try=$((try+1))
+
     if [ "$try" -gt "$MAX_TRIES" ]; then
         error "Retry exceeds max retries";
         return 1;
@@ -103,7 +105,6 @@ retry() {
         info "Skipping clearing path; WERCKER_BUNDLE_INSTALL_CLEAR_PATH is not set to true";
     fi
 
-    try=$((try+1))
     info "Retrying bundle install, try: $try";
     exec_bundle_install;
 }
