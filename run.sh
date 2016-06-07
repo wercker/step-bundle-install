@@ -1,15 +1,20 @@
 #!/bin/sh
 bundle_command="bundle install"
 gemfile_name="Gemfile"
+default_cache_path="$WERCKER_CACHE_DIR/bundle-install/"
+install_path=""
+try=1
+MAX_TRIES=3
 
 if [ -z "$WERCKER_BUNDLE_INSTALL_PATH" ] ; # Check $WERCKER_BUNDLE_INSTALL exists
 then
     if [ -n "$WERCKER_BUNDLE_INSTALL_PATH" ]; # Check $WERCKER_BUNDLE_INSTALL exists and is not empty
     then
-        bundle_command="$bundle_command --path $WERCKER_BUNDLE_INSTALL_PATH"
+        install_path="$WERCKER_BUNDLE_INSTALL_PATH"
     else
-        bundle_command="$bundle_command --path $WERCKER_CACHE_DIR/bundle-install/"
+        install_path="$default_cache_path"
     fi
+    bundle_command="$bundle_command --path $install_path"
 fi
 
 if [ -n "$WERCKER_BUNDLE_INSTALL_WITHOUT" ] ; then
@@ -84,21 +89,39 @@ install_bundler() {
     debug "bundle version: $(bundle --version)";
 }
 
-if [ ! -e "$PWD/$gemfile_name" ]; then
-    info "Skipping bundle install because Gemfile not found in $PWD";
-else
-    info 'Gemfile found. Start bundle install.';
+retry() {
+    info "Unable to execute bundle install";
 
-    install_bundler;
-
-    debug "$bundle_command";
-    $bundle_command;
-
-    if [[ $? -ne 0 ]]; then
-        fail 'bundle install command failed';
-    else
-        success "finished $bundle_command";
+    if [ "$try" -gt "$MAX_TRIES" ]; then
+        error "Retry exceeds max retries";
+        return 1;
     fi
+
+    if [ "$WERCKER_BUNDLE_INSTALL_CLEAR_PATH" = "true" ]; then
+        clear_install_path;
+    else
+        info "Skipping clearing path; WERCKER_BUNDLE_INSTALL_CLEAR_PATH is not set to true";
+    fi
+
+    try=$((try+1))
+    info "Retrying bundle install, try: $try";
+    exec_bundle_install;
+}
+
+clear_install_path() {
+    if [ -n "$install_path" ]; then
+        info "Clearing path: $install_path"
+        rm -rf "$install_path";
+    else
+        warn "install_path not set, unable to clear install path";
+    fi
+}
+
+exec_bundle_install() {
+    debug "$bundle_command";
+    $bundle_command || retry;
+
+    info "bundle install completed succesfully"
 
     if ! type rbenv &> /dev/null ; then
         debug 'skipping rbenv rehash because rbenv is not found';
@@ -108,4 +131,13 @@ else
         rbenv rehash;
         info 'rbenv rehash completed';
     fi
+}
+
+if [ ! -e "$PWD/$gemfile_name" ]; then
+    info "Skipping bundle install because Gemfile not found in $PWD";
+else
+    info 'Gemfile found. Start bundle install.';
+
+    install_bundler;
+    exec_bundle_install;
 fi
