@@ -90,13 +90,11 @@ install_bundler() {
 }
 
 retry() {
-    info "Unable to execute bundle install";
 
     try=$((try+1))
 
     if [ "$try" -gt "$MAX_TRIES" ]; then
-        error "Retry exceeds max retries";
-        return 1;
+        fail "Retry exceeds max retries";
     fi
 
     if [ "$WERCKER_BUNDLE_INSTALL_CLEAR_PATH" = "true" ]; then
@@ -120,17 +118,22 @@ clear_install_path() {
 
 exec_bundle_install() {
     debug "$bundle_command";
-    $bundle_command || retry;
+    $bundle_command;
 
-    info "bundle install completed succesfully"
-
-    if ! type rbenv &> /dev/null ; then
-        debug 'skipping rbenv rehash because rbenv is not found';
+    if [[ $? -ne 0 ]]; then
+        info "Unable to execute bundle install";
+        retry
     else
-        debug 'rbenv is found... will rehash';
-        debug 'rbenv rehash';
-        rbenv rehash;
-        info 'rbenv rehash completed';
+        info "bundle install completed succesfully"
+
+        if ! type rbenv &> /dev/null ; then
+            debug 'skipping rbenv rehash because rbenv is not found';
+        else
+            debug 'rbenv is found... will rehash';
+            debug 'rbenv rehash';
+            rbenv rehash;
+            info 'rbenv rehash completed';
+        fi
     fi
 }
 

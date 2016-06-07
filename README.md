@@ -40,6 +40,10 @@ The MIT License (MIT)
 
 # Changelog
 
+## 2.0.1
+
+- Fix for failing bundle install execution
+
 ## 2.0.0
 
 - Add `retry` to the bundle command
