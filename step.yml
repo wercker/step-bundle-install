@@ -1,0 +1,50 @@
+name: bundle-install
+version: 3.0.0
+summary: bundle-install step
+tags:
+  - bundler
+  - ruby
+properties:
+- name: path
+  type: string
+  required: false
+- name: without
+  type: string
+  required: false
+- name: standalone
+  type: string
+  required: false
+- name: binstubs
+  type: string
+  required: false
+- name: clean
+  type: string
+  required: false
+- name: full-index
+  type: string
+  required: false
+- name: deployment
+  type: string
+  required: false
+- name: local
+  type: string
+  required: false
+- name: frozen
+  type: string
+  required: false
+- name: jobs
+  type: string
+  required: false
+- name: version
+  type: string
+  required: false
+- name: gemfile
+  type: string
+  required: false
+- name: retry
+  type: string
+  required: false
+- name: clear-path
+  type: string
+  required: false
+  default: "true"
